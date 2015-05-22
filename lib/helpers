@@ -1,0 +1,52 @@
+# Helper functions that can be sourced via "." into the rest of the plugin
+
+DOKKU_EVENTS_LOGFILE=/var/log/dokku.log
+DOKKU_LOGGER_TAG=dokku
+DOKKU_LOGGER_OPTS="-t $DOKKU_LOGGER_TAG -i $DOKKU_LOGGER_OPTS_EXTRA"
+DOKKU_RSYSLOG_FILTER=/etc/rsyslog.d/99-dokku.conf
+
+g_logger="$(which logger)"
+
+
+# Install rsyslog filter
+f_dokku_events_install_rsyslog_filter() {
+    cat >$DOKKU_RSYSLOG_FILTER <<EOF
+:syslogtag, contains, "$DOKKU_LOGGER_TAG" $DOKKU_EVENTS_LOGFILE
+EOF
+}
+
+
+# Plugin installation
+f_dokku_events_install() {
+    touch $DOKKU_EVENTS_LOGFILE
+    chown syslog:dokku $DOKKU_EVENTS_LOGFILE
+    chmod 664 $DOKKU_EVENTS_LOGFILE
+    f_dokku_events_install_rsyslog_filter
+    service rsyslog reload
+}
+
+
+# Make a syslog entry and write stderr to file too
+f_dokku_events_log() {
+    $g_logger $DOKKU_LOGGER_OPTS -- $@
+}
+
+
+# Log a pluginhook call
+f_dokku_events_log_pluginhook_call() {
+    local l_hook
+
+    l_hook="$1"
+    shift
+    f_dokku_events_log "INVOKED: ${l_hook}( $@ )"
+}
+
+
+# List events logged
+f_dokku_events_list_hooks() {
+    local l_plugin_dir
+
+    l_plugin_dir="$1"
+
+    find "$l_plugin_dir" -type l -printf "%f " | sort
+}
