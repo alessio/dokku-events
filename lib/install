@@ -7,5 +7,5 @@ PLUGIN_DIR=$(dirname $0)
 
 f_dokku_events_install
 
-f_dokku_events_log_pluginhook_call "$(basename $0)" "- args: " \'$@\'
+[[ "$DOKKU_EVENTS" ]] && f_dokku_events_log_pluginhook_call "$(basename $0)" $@
 
