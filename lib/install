@@ -9,3 +9,4 @@ f_dokku_events_install
 
 [[ "$DOKKU_EVENTS" ]] && f_dokku_events_log_pluginhook_call "$(basename $0)" $@
 
+exit 0
