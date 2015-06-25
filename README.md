@@ -32,7 +32,3 @@ dokku events:on
 ```
 
 The plugin outputs the messages to a separate log file too, which is located at `/var/log/dokku.log`.
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/alessio/dokku-events/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
