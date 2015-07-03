@@ -2,7 +2,7 @@
 
 Event logger for [dokku](https://github.com/progrium/dokku)
 
-**The development of this plugin is discontinued as it has been merged into Dokku since v0.3.21**
+**The development of this plugin is discontinued as it has been merged into Dokku since [v0.3.21](https://github.com/progrium/dokku/releases/tag/v0.3.21)**
 
 Record events (i.e. [pluginhook](https://github.com/progrium/pluginhook)'s  calls) as syslog entries and provides a shortcut command to display the last ones.
 
